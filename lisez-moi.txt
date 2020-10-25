@@ -1,0 +1,75 @@
+#####################################################
+#  jargon avec catégories : Martial Le Peillet
+#  webmaster@toplenet.com - http://www.toplenet.com  
+#  16/12/2004
+#  Développé sur XOOPS-JP 2.0.6.1
+#  devrait fonctionner sur XOOPS-JP 2.0.6.X
+#  
+#  Pour le moment, il n'y a pas de script pour mettre à jour à partir de l'ancienne version
+#  qui n'a pas de catégorie.
+#
+#  Ce script est issu de jargon de Pascal Le Boustouller
+#  Licence : GPL 
+#  Merci de laisser ce copyright en place...
+#####################################################
+
+
++ installation : 
+- décompressez les fichiers et répertoires dans le répertoire modules de xoops.
+- très IMPORTANT passez le fichier jargon-config.php (du répertoire modules/jargon/) en CHMOD 666
+- pour installer le jargon, activer le module jargon dans votre administration
+- cette version comporte un bloc, si vous voulez l'utiliser, activez le dans "Blocs"
+
+Modification des tables par rapport à l'ancienne version
+
+Les noms des tables ont été modifié pour être au pluriel (jargon -> jargon, jargon_comm -> jargon_comm)
+Insertion d'un champ idcat dans la table jargon
+
+Création d'une table des catégories
+
+CREATE TABLE jargon_cat (
+   idcat int(2) DEFAULT '0' NOT NULL auto_increment,
+   nomcat varchar(50) NOT NULL,
+   PRIMARY KEY (idcat),
+   UNIQUE idcat (idcat)
+);
+
+Mise à jour depuis la version sans catégorie (2.0 -> 2.1)
+
+Il vous faudra bidouiller votre base. J'ai bien pensé à faire une moulinette mais chaque définition doit être mis à jour
+pour le champ catégorie (idcat) et ça on ne peut pas le faire avec un script.
+
+Ce que je vous conseille :
+
+Installez le module jargon (remarquez le "s")
+Créez vos catégories dans l'admin de jargon
+
+Avec phpmyadmin, faites une exportation des tables jargon et jargon_comm
+Désélectionnez structure
+Sélectionnez Données - Insertions complètes et Insertions étendues
+Cliquez sur Exécuter
+Faites un copier coller dans un éditeur de texte
+Modifiez INSERT INTO `xoops_jargon` en INSERT INTO `xoops_jargon`
+et INSERT INTO `xoops_jargon_comm` en INSERT INTO `xoops_jargon_comm`
+
+copier coller dans la fenêtre SQL de phpmyadmin
+Cliquez sur Exécuter
+
+Il ne vous reste plus qu'à modifier le champ catégorie de chaque terme en cliquant sur "modifier" sous chaque terme !
+
+Je ne pense pas que l'on puisse faire autrement.
+
+La procédure ci-dessus m'a permis de récupérer + de 400 définitions de mon ancien jargon !
+
+**** Mise à jour du 05/01/2004 ******************
+La version 2.1 ne fonctionne pas avec le paramètre register_globals à Off de php.ini
+La mise à jour de cette nouvelle version (2.2) permet le fonctionnement de ce module avec register_globals à Off ou à On
+
+Copier simplement le pack dans votre répertoire modules.
+**************************************************
+
+Enjoy !!
+
+Martialito
+webmaster@toplenet.com
+http://www.toplenet.com
